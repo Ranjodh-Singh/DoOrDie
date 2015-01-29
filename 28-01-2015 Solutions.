@@ -17,18 +17,20 @@ public class Room {
 		Map<Integer ,Request>  map = new HashMap<Integer, Request>();
 		//input all the request like this lets run for 5 interval;
 		for(int i =0; i<5;i++){
-		Request request  = new Request(sc.nextInt(),sc.nextInt(),i);
+		Request request  = new Request(sc.nextInt(),sc.nextInt(),i+10);
 		requests.add(request);
 		map.put(request.color,request);
 		}
 		 int[][] results;
-		results = new int[requests.size()][];
+		results = new int[requests.size()][5];
 		Collections.sort(requests);
 		for (int i = 0; i < requests.size()-1; i++) {
 			results [i][0] = requests.get(i).color;
+			 int k =i;
 			for (int j = i+1; j < requests.size(); j++) {
-				if(requests.get(i).rear < requests.get(j).front){
+				if(requests.get(k).rear < requests.get(j).front){
 					results[i][j] = requests.get(j).color;
+					k = j;
 				}
 			}
 		}
@@ -37,7 +39,16 @@ public class Room {
 			buckets[i] = results[i].length;
 		}
 		Arrays.sort(buckets);
-		System.out.println(buckets[buckets.length-1]);
+		//System.out.println(buckets[buckets.length-1]);
+		for (int i = 0; i < results.length; i++) {
+			for (int j = 0; j < results[i].length; j++) {
+				if(map.get(results[i][j]) != null)
+				System.out.print(map.get(results[i][j]).front+"-"+map.get(results[i][j]).rear+",");
+				
+			}
+			System.out.println();
+			
+		}
 	}
 
 }
