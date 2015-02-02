@@ -52,7 +52,7 @@ public class MaxMovies {
 		public String toString() {
 			return "Activity [start=" + start + ", finish=" + finish + ", hours=" + hours + "]";
 		}
-
+// trick is to sort by the finish time and pick the first element by default.
 		@Override
 		public int compareTo(Activity o) {
 			if (this.finish < o.finish) {
