@@ -10,6 +10,7 @@ import java.util.List;
  *         times. Select the maximum number of activities that can be performed
  *         by a single person, assuming that a person can only work on a single
  *         activity at a time.
+ * @see <a href="http://www.geeksforgeeks.org/greedy-algorithms-set-1-activity-selection-problem/">Link</a> 
  *
  */
 public class MaxMovies {
