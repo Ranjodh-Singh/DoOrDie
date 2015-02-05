@@ -1,13 +1,16 @@
 package edu.princeton.test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
+
 /**
  * The Class Kruskal.
- * 
+ * @author ranjodh_singh
  * @see <a
  *      href="http://www.geeksforgeeks.org/greedy-algorithms-set-2-kruskals-minimum-spanning-tree-mst/">link</a>
  */
@@ -36,18 +39,86 @@ public class Kruskal {
 		graph.addEdge(4, 2, 5);
 		graph.addEdge(14, 3, 5);
 		// created the graph with different edges.
-		for (Edge edge : graph.getNeighbours(5)) {
+		/*for (Edge edge : graph.getNeighbours(5)) {
 			System.out.println("Weight " + edge.weight + " with " + edge.otherVertex(5));
 
-		}
+		}*/
 		Queue<Edge> edges = graph.getEdges();
-		for (Edge edge : edges) {
-			if(noCycle(edge)){
-				//add it to MST.
+      
+		List<Edge> MST = new ArrayList<Edge>();
+		UnionFind uF = new UnionFind(edges.size());
+		Edge edge;
+		while (( edge = (Edge)edges.poll())!= null) {
+			if (uF.union(edge.first, edge.second)) {
+				MST.add(edge);
 			}
 		}
-		
+		for (Edge edgeList : MST) {
+			System.out.println("edge : " + edgeList);
+		}
 
+	}
+
+	/**
+	 * The Class UnionFind.
+	 */
+	static class UnionFind {
+		
+		/** The array. */
+		int[] array;
+
+		/**
+		 * Instantiates a new union find.
+		 *
+		 * @param N the n
+		 */
+		public UnionFind(int N) {
+			array = new int[N];
+			for (int i = 0; i < array.length; i++) {
+				array[i] = i;
+			}
+		}
+
+		/**
+		 * Union.
+		 *
+		 * @param a the a
+		 * @param b the b
+		 * @return true, if successful
+		 */
+		boolean union(int a, int b) {
+			int first = root(a);
+			int second = root(b);
+			if (first == second) {
+				return false;
+			} else {
+				array[first] = second;
+				return true;
+			}
+		}
+
+		/**
+		 * Find.
+		 *
+		 * @param p the p
+		 * @param q the q
+		 * @return true, if successful
+		 */
+		public boolean find(int p, int q) {
+			return root(p) == root(q);
+		}
+
+		/**
+		 * Root.
+		 *
+		 * @param i the i
+		 * @return the int
+		 */
+		private int root(int i) {
+			while (i != array[i])
+				i = array[i];
+			return i;
+		}
 	}
 
 	/**
@@ -98,11 +169,13 @@ public class Kruskal {
 			adj[b].add(edge);
 			edges.add(edge);
 		}
+
 		/**
-		 * 
+		 * Gets the edges.
+		 *
 		 * @return all the edges in a queue with their natural order.
 		 */
-		public Queue<Edge> getEdges(){
+		public Queue<Edge> getEdges() {
 			return edges;
 		}
 
@@ -119,9 +192,18 @@ public class Kruskal {
 	}
 
 	/**
-	 * The Class Edge. for storing a particular edge with the weight associate with it.
+	 * The Class Edge. for storing a particular edge with the weight associate
+	 * with it.
 	 */
 	static class Edge implements Comparable<Edge> {
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "Edge [first=" + first + ", second=" + second + ", weight=" + weight + "]";
+		}
 
 		/** The second. */
 		int first, second;
